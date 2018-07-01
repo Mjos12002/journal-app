@@ -6,7 +6,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -40,7 +42,10 @@ public class RegisterActivity extends AppCompatActivity {
         stEmail = etEmail.getText().toString();
         stPassword = etPassword.getText().toString();
         stName = etName.getText().toString();
-        Toast.makeText(this, stEmail + " " + stPassword, Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(stEmail) || TextUtils.isEmpty(stPassword) || TextUtils.isEmpty(stName)){
+            Toast.makeText(this, "Empty values not allowed", Toast.LENGTH_SHORT).show();
+            return;
+        }
         firebaseAuth.createUserWithEmailAndPassword(stEmail, stPassword)
                 .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
